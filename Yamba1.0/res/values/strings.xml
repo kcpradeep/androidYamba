@@ -7,5 +7,7 @@
     <string name="titleStatusUpdate">Status Update</string>
     <string name="hintStatus">Please enter your status message</string>
     <string name="buttonUpdate">Update</string>
+    <string name="msgStatusUpdatedSuccess">Status Updated Successfully</string>
+    <string name="msgStatusUpdatedFail">Status Update Failed</string>
 
 </resources>

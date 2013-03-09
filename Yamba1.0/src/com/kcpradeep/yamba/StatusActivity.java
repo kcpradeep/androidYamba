@@ -43,6 +43,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		Log.d("StatusActivity", "OnClick with status" + status);
 
 		// update it online
+
 		new PostToTwitter().execute(status);
 		Log.d(TAG, "onClick");
 
@@ -53,7 +54,8 @@ public class StatusActivity extends Activity implements OnClickListener {
 		protected String doInBackground(String... statuses) {
 
 			try {
-				winterwell.jtwitter.Status status = twitter.updateStatus(statuses[0]);
+				winterwell.jtwitter.Status status = twitter
+						.updateStatus(statuses[0]);
 				return status.text;
 			} catch (TwitterException e) {
 				Log.e(TAG, e.toString());
