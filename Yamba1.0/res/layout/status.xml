@@ -11,34 +11,21 @@
     tools:context=".StatusActivity" >
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/title"
         android:text="@string/titleStatusUpdate"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/editStatus"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#309f"
-        android:ems="10"
-        android:hint="@string/hintStatus"
-        android:inputType="textEmailAddress"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:typeface="serif" >
+        style="@style/activity"
+        android:hint="@string/hintStatus" >
 
         <requestFocus />
     </EditText>
 
     <Button
         android:id="@+id/buttonUpdate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonUpdate"
-        android:textSize="25sp" />
+        style="@style/button"
+        android:text="@string/buttonUpdate" />
 
 </LinearLayout>
