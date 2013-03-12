@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">30sp</item>
     </style>
-     <style name="activity">
+
+    <style name="activity">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -15,11 +17,14 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">serif</item>
+        <item name="android:inputType">textAutoCorrect|textAutoComplete</item>
     </style>
+
     <style name="button">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">25sp</item>
+        <!-- item name="android:background">@drawable/twitterbutton</item> -->
     </style>
-    
+
 </resources>

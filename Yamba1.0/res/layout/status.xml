@@ -18,7 +18,8 @@
     <EditText
         android:id="@+id/editStatus"
         style="@style/activity"
-        android:hint="@string/hintStatus" >
+        android:hint="@string/hintStatus"
+        android:maxLength="140" >
 
         <requestFocus />
     </EditText>
