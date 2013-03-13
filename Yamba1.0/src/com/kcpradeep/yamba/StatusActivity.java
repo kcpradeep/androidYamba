@@ -5,6 +5,7 @@ import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -24,6 +25,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 
 		// Get values of text and button from view
@@ -33,8 +35,22 @@ public class StatusActivity extends Activity implements OnClickListener {
 		// Register the listener, call "this" when the button is clicked
 		buttonUpdate.setOnClickListener(this);
 
-		twitter = new Twitter("student", "password");
-		twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
+		try {
+			twitter = new Twitter("student", "password");
+			twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
+		} catch (Exception e) {
+			Log.e(TAG, e.toString());
+			e.printStackTrace();
+			Toast.makeText(this, "Unable to connect to twitter!!",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		Debug.stopMethodTracing();
 	}
 
 	@Override
