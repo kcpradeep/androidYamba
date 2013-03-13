@@ -9,5 +9,12 @@
     <string name="buttonUpdate">Update</string>
     <string name="msgStatusUpdatedSuccess">Status Updated Successfully</string>
     <string name="msgStatusUpdatedFail">Status Update Failed</string>
+    <string name="username">Username</string>
+    <string name="usernameSummary">Please enter your login username</string>
+    <string name="password">password</string>
+    <string name="passwordSummary">Please enter your password</string>
+    <string name="server">server</string>
+    <string name="serverSummary">Enter the server API</string>
+    <string name="perfTitle">Preferences</string>
 
 </resources>

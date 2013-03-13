@@ -3,11 +3,13 @@ package com.kcpradeep.yamba;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +27,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Debug.startMethodTracing("Yamba.trace");
+		// Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 
 		// Get values of text and button from view
@@ -34,23 +36,13 @@ public class StatusActivity extends Activity implements OnClickListener {
 
 		// Register the listener, call "this" when the button is clicked
 		buttonUpdate.setOnClickListener(this);
-
-		try {
-			twitter = new Twitter("student", "password");
-			twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
-		} catch (Exception e) {
-			Log.e(TAG, e.toString());
-			e.printStackTrace();
-			Toast.makeText(this, "Unable to connect to twitter!!",
-					Toast.LENGTH_LONG).show();
-		}
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
 
-		Debug.stopMethodTracing();
+		// Debug.stopMethodTracing();
 	}
 
 	@Override
@@ -59,24 +51,27 @@ public class StatusActivity extends Activity implements OnClickListener {
 		Log.d("StatusActivity", "OnClick with status" + status);
 
 		// update it online
-
 		new PostToTwitter().execute(status);
 		Log.d(TAG, "onClick");
 
 	}
 
-	class PostToTwitter extends AsyncTask<String, Integer, String> {
+	private class PostToTwitter extends AsyncTask<String, Integer, String> {
 		@Override
 		protected String doInBackground(String... statuses) {
 
 			try {
+				twitter = new Twitter("student", "password");
+				twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
 				winterwell.jtwitter.Status status = twitter
 						.updateStatus(statuses[0]);
-				return status.text;
+				return StatusActivity.this
+						.getString(R.string.msgStatusUpdatedSuccess);
 			} catch (TwitterException e) {
 				Log.e(TAG, e.toString());
 				e.printStackTrace();
-				return "Failed to post";
+				return StatusActivity.this
+						.getString(R.string.msgStatusUpdatedFail);
 			}
 		}
 
@@ -93,7 +88,20 @@ public class StatusActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case R.id.itemPrefs:
+			startActivity(new Intent(this, PrefsActivity.class));
+			break;
+		default:
+			break;
+		}
 		return true;
 	}
 
