@@ -3,6 +3,8 @@ package com.kcpradeep.yamba;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ public class StatusActivity extends Activity implements OnClickListener {
 	EditText editStatus;
 	Button buttonUpdate;
 	Twitter twitter;
+	ProgressDialog postingDiaglog;
+	static final int DIALOG_ID = 47;
 
 	// Called when the activity is first created
 	@Override
@@ -51,6 +55,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		Log.d("StatusActivity", "OnClick with status" + status);
 
 		// update it online
+		showDialog(DIALOG_ID);
 		new PostToTwitter().execute(status);
 		Log.d(TAG, "onClick");
 
@@ -80,8 +85,10 @@ public class StatusActivity extends Activity implements OnClickListener {
 		}
 
 		protected void onPostExecute(String result) {
+			dismissDialog(DIALOG_ID);
 			Toast.makeText(StatusActivity.this, result, Toast.LENGTH_LONG)
 					.show();
+
 		}
 	}
 
@@ -103,6 +110,23 @@ public class StatusActivity extends Activity implements OnClickListener {
 			break;
 		}
 		return true;
+	}
+
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DIALOG_ID: {
+			ProgressDialog dialog = new ProgressDialog(this);
+			//dialog.setTitle("Posting to Twitter");
+			dialog.setMessage(this.getString(R.string.msgPostingTweet));
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(true);
+			return dialog;
+		}
+		}
+		return null;
+
 	}
 
 }
