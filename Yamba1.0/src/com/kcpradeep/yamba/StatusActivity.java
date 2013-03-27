@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +25,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	private static final String TAG = "StatusActivity";
 	EditText editStatus;
 	Button buttonUpdate;
-	Twitter twitter;
+	// Twitter twitter;
 	ProgressDialog postingDiaglog;
 	static final int DIALOG_ID = 47;
 
@@ -66,10 +68,11 @@ public class StatusActivity extends Activity implements OnClickListener {
 		protected String doInBackground(String... statuses) {
 
 			try {
-				twitter = new Twitter("student", "password");
-				twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
-				winterwell.jtwitter.Status status = twitter
-						.updateStatus(statuses[0]);
+				// twitter = new Twitter("student", "password");
+				// twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
+
+				((YambaApplication) StatusActivity.this.getApplication())
+						.getTwitter().updateStatus(statuses[0]);
 				return StatusActivity.this
 						.getString(R.string.msgStatusUpdatedSuccess);
 			} catch (TwitterException e) {
@@ -106,7 +109,15 @@ public class StatusActivity extends Activity implements OnClickListener {
 		case R.id.itemPrefs:
 			startActivity(new Intent(this, PrefsActivity.class));
 			break;
+
+		case R.id.itemServiceStart:
+
+			break;
+		case R.id.itemServiceStop:
+			startService(new Intent(this, UpdaterService.class));
+			break;
 		default:
+			startService(new Intent(this, UpdaterService.class));
 			break;
 		}
 		return true;
@@ -118,7 +129,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		switch (id) {
 		case DIALOG_ID: {
 			ProgressDialog dialog = new ProgressDialog(this);
-			//dialog.setTitle("Posting to Twitter");
+			// dialog.setTitle("Posting to Twitter");
 			dialog.setMessage(this.getString(R.string.msgPostingTweet));
 			dialog.setIndeterminate(true);
 			dialog.setCancelable(true);

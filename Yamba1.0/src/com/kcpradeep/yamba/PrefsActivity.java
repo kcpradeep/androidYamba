@@ -1,4 +1,4 @@
-	package com.kcpradeep.yamba;
+package com.kcpradeep.yamba;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

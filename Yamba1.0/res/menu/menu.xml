@@ -6,5 +6,13 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/perfTitle">
     </item>
+    <item
+        android:id="@+id/itemServiceStart"
+        android:title="@string/titleServiceStart">
+    </item>
+    <item
+        android:id="@+id/itemServiceStop"
+        android:title="@string/titleStopService">
+    </item>
 
 </menu>

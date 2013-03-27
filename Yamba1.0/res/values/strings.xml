@@ -17,5 +17,7 @@
     <string name="serverSummary">Enter the server API</string>
     <string name="perfTitle">Preferences</string>
     <string name="msgPostingTweet">Please wait while posting...</string>
+    <string name="titleServiceStart">Start Service</string>
+    <string name="titleStopService">Stop Service</string>
 
 </resources>
