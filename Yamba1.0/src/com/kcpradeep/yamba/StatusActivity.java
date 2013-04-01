@@ -107,17 +107,18 @@ public class StatusActivity extends Activity implements OnClickListener {
 
 		switch (item.getItemId()) {
 		case R.id.itemPrefs:
+			Log.d("MENU_SWITCH", "Preference selected");
 			startActivity(new Intent(this, PrefsActivity.class));
 			break;
-
 		case R.id.itemServiceStart:
-
+			Log.d("MENU_SWITCH", "Service Start");
+			startService(new Intent(this, UpdaterService.class));
 			break;
 		case R.id.itemServiceStop:
+			Log.d("MENU_SWITCH", "Service Stop");
 			startService(new Intent(this, UpdaterService.class));
 			break;
 		default:
-			startService(new Intent(this, UpdaterService.class));
 			break;
 		}
 		return true;
