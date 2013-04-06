@@ -36,13 +36,13 @@ public class UpdaterService extends Service {
 	}
 
 	@Override
-	@Deprecated
-	public synchronized void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
+	public synchronized int onStartCommand(Intent intent,int flags, int startId) {
+		super.onStartCommand(intent,flags, startId);
 		if (!updater.isRunning()) {
 			updater.start();
 		}
-		Log.d(TAG, "onStarted");
+		 Log.d(TAG, "onStarted");
+		 return 0;
 	}
 
 	// //// Thread
@@ -61,11 +61,17 @@ public class UpdaterService extends Service {
 				Log.d(TAG, "Updater running");
 				Twitter twitter = ((YambaApplication) getApplication())
 						.getTwitter();
-				List<Status> statuses = twitter.getHomeTimeline();
+				String screenName = twitter.getScreenName();
+				Log.d(TAG,screenName);
+				
+				List<Status> statuses = twitter.getFriendsTimeline();
 				for (Status status : statuses) {
+
 					Log.d(TAG, String.format("%s %s", status.user.name,
 							status.text));
+
 				}
+				
 				try {
 					this.sleep(DELAY);
 				} catch (InterruptedException e) {
