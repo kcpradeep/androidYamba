@@ -2,8 +2,8 @@ package com.kcpradeep.yamba;
 
 import java.util.List;
 
-import winterwell.jtwitter.Status;
 import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.Twitter.Status;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -64,7 +64,7 @@ public class UpdaterService extends Service {
 				String screenName = twitter.getScreenName();
 				Log.d(TAG,screenName);
 				
-				List<Status> statuses = twitter.getFriendsTimeline();
+				List<Status> statuses = twitter.getHomeTimeline();
 				for (Status status : statuses) {
 
 					Log.d(TAG, String.format("%s %s", status.user.name,
