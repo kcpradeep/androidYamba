@@ -6,6 +6,7 @@ import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
 import android.app.Service;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -64,14 +65,21 @@ public class UpdaterService extends Service {
 				String screenName = twitter.getScreenName();
 				Log.d(TAG,screenName);
 				
+				//Open Database
+				DbHelper dbHelper = new DbHelper(UpdaterService.this);
+				SQLiteDatabase db = dbHelper.getWritableDatabase();
+				
 				List<Status> statuses = twitter.getHomeTimeline();
 				for (Status status : statuses) {
 
 					Log.d(TAG, String.format("%s %s", status.user.name,
 							status.text));
+					
 
 				}
-				
+				//Close Database
+				db.close();
+				dbHelper.close();
 				try {
 					this.sleep(DELAY);
 				} catch (InterruptedException e) {
