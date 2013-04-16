@@ -28,11 +28,13 @@ public class StatusActivity extends Activity implements OnClickListener {
 	// Twitter twitter;
 	ProgressDialog postingDiaglog;
 	static final int DIALOG_ID = 47;
+	YambaApplication yamba;
 
 	// Called when the activity is first created
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		yamba = (YambaApplication) getApplication();
 		// Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 
@@ -47,8 +49,6 @@ public class StatusActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
-
-		// Debug.stopMethodTracing();
 	}
 
 	@Override
@@ -117,6 +117,11 @@ public class StatusActivity extends Activity implements OnClickListener {
 		case R.id.itemServiceStop:
 			Log.d("MENU_SWITCH", "Service Stop");
 			startService(new Intent(this, UpdaterService.class));
+			break;
+		case R.id.itemPurge:
+			Log.d("MENU_SWITCH", "Purge");
+			yamba.statusData.delete();
+			Toast.makeText(this, R.string.msgPurge, Toast.LENGTH_LONG).show();
 			break;
 		default:
 			break;
