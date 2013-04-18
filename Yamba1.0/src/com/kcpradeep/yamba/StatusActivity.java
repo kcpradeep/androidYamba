@@ -1,16 +1,12 @@
 package com.kcpradeep.yamba;
 
-import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -109,6 +105,10 @@ public class StatusActivity extends Activity implements OnClickListener {
 		case R.id.itemPrefs:
 			Log.d("MENU_SWITCH", "Preference selected");
 			startActivity(new Intent(this, PrefsActivity.class));
+			break;
+		case R.id.itemTimeline:
+			Log.d("MENU_SWITCH", "Timeline selected");
+			startActivity(new Intent(this, TimelineActivity.class));
 			break;
 		case R.id.itemServiceStart:
 			Log.d("MENU_SWITCH", "Service Start");

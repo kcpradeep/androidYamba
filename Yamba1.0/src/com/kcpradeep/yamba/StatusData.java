@@ -3,6 +3,7 @@ package com.kcpradeep.yamba;
 import winterwell.jtwitter.Twitter.Status;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -27,6 +28,14 @@ public class StatusData {
 
 	public void close() {
 		dbHelper.close();
+	}
+
+	public Cursor query() {
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+		// get the data
+		return db.query(DbHelper.TABLE, null, null, null, null, null,
+				C_CREATEDAT + " DESC");
 	}
 
 	/**

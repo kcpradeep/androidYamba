@@ -15,9 +15,13 @@
         android:title="@string/titleStopService">
     </item>
     <item
+        android:id="@+id/itemTimeline"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/titleTimeline">
+    </item>
+    <item
         android:id="@+id/itemPurge"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/titlePurge">
     </item>
-
 </menu>
