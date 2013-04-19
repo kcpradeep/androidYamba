@@ -36,22 +36,24 @@ public class UpdaterService extends Service {
 	}
 
 	@Override
-	public synchronized int onStartCommand(Intent intent,int flags, int startId) {
-		super.onStartCommand(intent,flags, startId);
+	public synchronized int onStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
 		if (!updater.isRunning()) {
 			updater.start();
 		}
-		 Log.d(TAG, "onStarted");
-		 return 0;
+		Log.d(TAG, "onStarted");
+		return 0;
 	}
 
 	// //// Thread
 	class Updater extends Thread {
 		static final long DELAY = 30000;
 		public boolean isRunning = false;
+		YambaApplication yamba;
 
 		public Updater() {
 			super("Updater");
+			yamba = ((YambaApplication) getApplication());
 		}
 
 		@Override
@@ -59,24 +61,15 @@ public class UpdaterService extends Service {
 			isRunning = true;
 			while (isRunning) {
 				Log.d(TAG, "Updater running");
-				Twitter twitter = ((YambaApplication) getApplication())
-						.getTwitter();
-				String screenName = twitter.getScreenName();
-				Log.d(TAG,screenName);
-				
-				List<Status> statuses = twitter.getFriendsTimeline();
+				Twitter twitter = yamba.getTwitter();
+				List<Status> statuses = twitter.getHomeTimeline();
 				for (Status status : statuses) {
-
-					Log.d(TAG, String.format("%s %s", status.user.name,
-							status.text));
-
+					yamba.statusData.insert(status);
 				}
-				
 				try {
-					this.sleep(DELAY);
+					Thread.sleep(DELAY);
 				} catch (InterruptedException e) {
 					isRunning = false;
-
 				}
 			}
 		}
