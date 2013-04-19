@@ -19,5 +19,7 @@
     <string name="msgPostingTweet">Please wait while posting...</string>
     <string name="titleServiceStart">Start Service</string>
     <string name="titleStopService">Stop Service</string>
-
+    <string name="titlePurge">Purge</string>
+    <string name="msgPurge">All Data Purged..</string>
+    <string name="titleTimeline">Timeline</string>
 </resources>

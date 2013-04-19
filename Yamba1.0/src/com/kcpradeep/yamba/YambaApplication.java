@@ -12,12 +12,21 @@ public class YambaApplication extends Application implements
 		OnSharedPreferenceChangeListener {
 	SharedPreferences prefs;
 	private Twitter twitter = null;
-
+	StatusData statusData;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
+		
+		statusData = new StatusData(this);
+	}
+	
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		statusData.close();
 	}
 
 	/**
@@ -51,5 +60,4 @@ public class YambaApplication extends Application implements
 		twitter = null;
 		
 	}
-
 }

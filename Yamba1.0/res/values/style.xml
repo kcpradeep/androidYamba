@@ -13,6 +13,7 @@
 
     <style name="activity">
         <item name="android:layout_width">fill_parent</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">#309f</item>
@@ -20,7 +21,6 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">serif</item>
-        <item name="android:inputType">textAutoCorrect|textAutoComplete</item>
     </style>
 
     <style name="button">
