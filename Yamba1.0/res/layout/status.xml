@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".StatusActivity" >
 
-    <!--    android:background="@drawable/twitterbackground" -->
 
     <TextView
         style="@style/title"

@@ -71,7 +71,7 @@ public class StatusData {
 		// Open Database
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		// delete
-		db.delete(dbHelper.TABLE, null, null);
+		db.delete(DbHelper.TABLE, null, null);
 		// close
 		db.close();
 	}

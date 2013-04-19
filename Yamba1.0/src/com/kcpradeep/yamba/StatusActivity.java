@@ -47,6 +47,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		super.onStop();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		String status = editStatus.getText().toString();
@@ -83,6 +84,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 			super.onProgressUpdate(values);
 		}
 
+		@SuppressWarnings("deprecation")
 		protected void onPostExecute(String result) {
 			dismissDialog(DIALOG_ID);
 			Toast.makeText(StatusActivity.this, result, Toast.LENGTH_LONG)
