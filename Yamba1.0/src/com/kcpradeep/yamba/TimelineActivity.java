@@ -3,13 +3,17 @@ package com.kcpradeep.yamba;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 public class TimelineActivity extends Activity {
 
-	TextView statuses;
+	//TextView statuses;
+	ListView listStatuses;
 	YambaApplication yamba;
 	Cursor cursor;
+	SimpleCursorAdapter adapter;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -19,13 +23,23 @@ public class TimelineActivity extends Activity {
 
 		// Setup UI
 		setContentView(R.layout.timeline);
-		statuses = (TextView) findViewById(R.id.TextStatuses);
+		listStatuses = (ListView) findViewById(R.id.statuses);
 
 		// Get the data
 		cursor = yamba.statusData.query();
 		startManagingCursor(cursor);
 		
-		final int USER_INDEX_COLUMN = cursor.getColumnIndex(StatusData.C_USER);
+		
+		String[] from = {StatusData.C_USER,StatusData.C_TEXT};
+		int[] to = {R.id.textUser, R.id.textText};
+		//Setup Adapter
+		
+		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, from, to);
+		listStatuses.setAdapter(adapter);
+		
+		
+		
+/*		final int USER_INDEX_COLUMN = cursor.getColumnIndex(StatusData.C_USER);
 		final int TEXT_INDEX_COLUMN = cursor.getColumnIndex(StatusData.C_TEXT);
 
 		// Output it
@@ -33,8 +47,10 @@ public class TimelineActivity extends Activity {
 		while (cursor.moveToNext()) { // moveToNext() initially to the first record
 			user = cursor.getString(USER_INDEX_COLUMN);
 			text = cursor.getString(TEXT_INDEX_COLUMN);
-			statuses.append(String.format("\n%s: %s",user,text));
-		}
+			listStatuses.append(String.format("\n%s: %s",user,text));
+		}*/
+		
+		Log.d("TimelineActivity","onCreated");
 	}
 	
 	
