@@ -12,10 +12,10 @@
             android:id="@+id/textUser"
             style="@style/rowText"
             android:layout_width="fill_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:paddingBottom="0dp"
-            android:text="textUser" />
+            android:layout_weight="1"
+            android:text="textUser"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textCreatedAt"
