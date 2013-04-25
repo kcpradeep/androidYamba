@@ -48,7 +48,6 @@ public class UpdaterService extends Service {
 	// //// Thread
 	class Updater extends Thread {
 		static final long DELAY = 30000;
-		public boolean isRunning = false;
 		YambaApplication yamba;
 
 		public Updater() {
@@ -58,8 +57,8 @@ public class UpdaterService extends Service {
 
 		@Override
 		public void run() {
-			isRunning = true;
-			while (isRunning) {
+			yamba.setRunning(true);
+			while (yamba.isRunning()) {
 				Log.d(TAG, "Updater running");
 				Twitter twitter = yamba.getTwitter();
 				List<Status> statuses = twitter.getHomeTimeline();
@@ -69,13 +68,13 @@ public class UpdaterService extends Service {
 				try {
 					Thread.sleep(DELAY);
 				} catch (InterruptedException e) {
-					isRunning = false;
+					yamba.setRunning(false);
 				}
 			}
 		}
 
 		public boolean isRunning() {
-			return isRunning;
+			return yamba.isRunning();
 		}
 	}
 

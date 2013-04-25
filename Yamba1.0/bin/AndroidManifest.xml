@@ -17,16 +17,17 @@
         android:icon="@drawable/twitterlogo"
         android:label="@string/app_name"
         android:theme="@style/global" >
-        <activity
-            android:name="com.kcpradeep.yamba.StatusActivity"
-            android:label="@string/app_name" >
+        <activity android:name="com.kcpradeep.yamba.TimelineActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kcpradeep.yamba.TimelineActivity" />
+        <activity
+            android:name="com.kcpradeep.yamba.StatusActivity"
+            android:label="@string/app_name" >
+        </activity>
         <activity android:name="com.kcpradeep.yamba.PrefsActivity" />
 
         <service android:name="com.kcpradeep.yamba.UpdaterService" />

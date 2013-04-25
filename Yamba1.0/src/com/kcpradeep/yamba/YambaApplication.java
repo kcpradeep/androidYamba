@@ -13,7 +13,16 @@ public class YambaApplication extends Application implements
 	SharedPreferences prefs;
 	private Twitter twitter = null;
 	StatusData statusData;
+	private boolean isRunning = false;
 	
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();

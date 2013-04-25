@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class StatusActivity extends Activity implements OnClickListener {
+public class StatusActivity extends BaseActivity implements OnClickListener {
 
 	private static final String TAG = "StatusActivity";
 	EditText editStatus;
@@ -68,8 +68,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 				// twitter = new Twitter("student", "password");
 				// twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
 
-				((YambaApplication) StatusActivity.this.getApplication())
-						.getTwitter().updateStatus(statuses[0]);
+				yamba.getTwitter().updateStatus(statuses[0]);
 				return StatusActivity.this
 						.getString(R.string.msgStatusUpdatedSuccess);
 			} catch (TwitterException e) {
@@ -91,44 +90,6 @@ public class StatusActivity extends Activity implements OnClickListener {
 					.show();
 
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.itemPrefs:
-			Log.d("MENU_SWITCH", "Preference selected");
-			startActivity(new Intent(this, PrefsActivity.class));
-			break;
-		case R.id.itemTimeline:
-			Log.d("MENU_SWITCH", "Timeline selected");
-			startActivity(new Intent(this, TimelineActivity.class));
-			break;
-		case R.id.itemServiceStart:
-			Log.d("MENU_SWITCH", "Service Start");
-			startService(new Intent(this, UpdaterService.class));
-			break;
-		case R.id.itemServiceStop:
-			Log.d("MENU_SWITCH", "Service Stop");
-			startService(new Intent(this, UpdaterService.class));
-			break;
-		case R.id.itemPurge:
-			Log.d("MENU_SWITCH", "Purge");
-			yamba.statusData.delete();
-			Toast.makeText(this, R.string.msgPurge, Toast.LENGTH_LONG).show();
-			break;
-		default:
-			break;
-		}
-		return true;
 	}
 
 	@Override

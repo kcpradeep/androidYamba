@@ -32,7 +32,6 @@ public class StatusData {
 
 	public Cursor query() {
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
-
 		// get the data
 		return db.query(DbHelper.TABLE, null, null, null, null, null,
 				C_CREATEDAT + " DESC");
@@ -83,8 +82,8 @@ public class StatusData {
 	 * 
 	 */
 	private class DbHelper extends SQLiteOpenHelper {
-		public static final String DB_NAME = "timeline.db";
-		public static final int DB_VERSION = 1;
+		public static final String DB_NAME = "timeline2.db";
+		public static final int DB_VERSION = 5;
 		public static final String TABLE = "statuses";
 
 		public DbHelper() {

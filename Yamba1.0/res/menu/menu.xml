@@ -7,13 +7,26 @@
         android:title="@string/perfTitle">
     </item>
     <item
+        android:id="@+id/itemStatus"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/titleStatusUpdate">
+    </item>
+    
+    <item
+        android:id="@+id/itemToggleService"
+        android:title="@string/titleServiceStart">
+    </item>
+    
+    <!--
+    <item
         android:id="@+id/itemServiceStart"
         android:title="@string/titleServiceStart">
     </item>
     <item
         android:id="@+id/itemServiceStop"
         android:title="@string/titleStopService">
-    </item>
+    </item>
+    -->
     <item
         android:id="@+id/itemTimeline"
         android:icon="@android:drawable/ic_menu_sort_by_size"
@@ -24,4 +37,5 @@
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/titlePurge">
     </item>
+
 </menu>

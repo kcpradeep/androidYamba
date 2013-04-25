@@ -22,7 +22,8 @@
             style="@style/rowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10 minutes ago" />
+            android:text="10 minutes ago"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -30,6 +31,7 @@
         style="@style/rowText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:autoLink="all"
         android:paddingTop="0dp"
         android:text="textText" />
 
