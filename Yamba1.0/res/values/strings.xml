@@ -22,4 +22,5 @@
     <string name="titlePurge">Purge</string>
     <string name="msgPurge">All Data Purged..</string>
     <string name="titleTimeline">Timeline</string>
+    <string name="msgSetupPrefs">Please set up the preferences</string>
 </resources>

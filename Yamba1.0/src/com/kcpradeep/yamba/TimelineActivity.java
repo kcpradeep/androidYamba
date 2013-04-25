@@ -1,5 +1,6 @@
 package com.kcpradeep.yamba;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TimelineActivity extends BaseActivity {
 
@@ -42,16 +44,19 @@ public class TimelineActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		yamba = (YambaApplication) getApplication();
+
 		// Setup UI
 		setContentView(R.layout.timeline);
-		yamba = (YambaApplication) getApplication();
+
 		listStatuses = (ListView) findViewById(R.id.statuses);
 
 		// Get the data
 		cursor = yamba.statusData.query();
 		startManagingCursor(cursor);
 
-		String[] from = { StatusData.C_USER, StatusData.C_TEXT,StatusData.C_CREATEDAT };
+		String[] from = { StatusData.C_USER, StatusData.C_TEXT,
+				StatusData.C_CREATEDAT };
 		int[] to = { R.id.textUser, R.id.textText, R.id.textCreatedAt };
 		// Setup Adapter
 
@@ -59,19 +64,20 @@ public class TimelineActivity extends BaseActivity {
 		adapter.setViewBinder(VIEW_BINDER);
 		listStatuses.setAdapter(adapter);
 
-		/*
-		 * final int USER_INDEX_COLUMN =
-		 * cursor.getColumnIndex(StatusData.C_USER); final int TEXT_INDEX_COLUMN
-		 * = cursor.getColumnIndex(StatusData.C_TEXT);
-		 * 
-		 * // Output it String user, text ; while (cursor.moveToNext()) { //
-		 * moveToNext() initially to the first record user =
-		 * cursor.getString(USER_INDEX_COLUMN); text =
-		 * cursor.getString(TEXT_INDEX_COLUMN);
-		 * listStatuses.append(String.format("\n%s: %s",user,text)); }
-		 */
-
+		// check if pref has been set
+		if (yamba.prefs.getString("username", null) == null) {
+			startActivity(new Intent(this, PrefsActivity.class));
+			Toast.makeText(this, R.string.msgSetupPrefs, Toast.LENGTH_LONG)
+					.show();
+			return;
+		}
 		Log.d("TimelineActivity", "onCreated");
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		cursor.requery();
 	}
 
 }
