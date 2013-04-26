@@ -10,6 +10,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name="YambaApplication"
@@ -31,6 +33,13 @@
         <activity android:name="com.kcpradeep.yamba.PrefsActivity" />
 
         <service android:name="com.kcpradeep.yamba.UpdaterService" />
+
+        <receiver android:name="com.kcpradeep.yamba.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

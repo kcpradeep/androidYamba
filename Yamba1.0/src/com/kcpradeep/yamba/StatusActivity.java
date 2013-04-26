@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class StatusActivity extends BaseActivity implements OnClickListener {
+public class StatusActivity extends BaseActivity implements OnClickListener,
+		LocationListener {
 
 	private static final String TAG = "StatusActivity";
 	EditText editStatus;
@@ -25,6 +29,9 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 	ProgressDialog postingDiaglog;
 	static final int DIALOG_ID = 47;
 	YambaApplication yamba;
+	LocationManager locationManager;
+	Location location;
+	String provider = LocationManager.GPS_PROVIDER;
 
 	// Called when the activity is first created
 	@Override
@@ -34,6 +41,14 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 		// Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 
+		// location stuff
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		location = locationManager.getLastKnownLocation(provider);
+		if (location != null) {
+			yamba.getTwitter().setMyLocation(
+					new double[] { location.getLatitude(),
+							location.getLongitude() });
+		}
 		// Get values of text and button from view
 		editStatus = (EditText) findViewById(R.id.editStatus);
 		buttonUpdate = (Button) findViewById(R.id.buttonUpdate);
@@ -43,8 +58,15 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 	}
 
 	@Override
-	protected void onStop() {
-		super.onStop();
+	protected void onResume() {
+		super.onResume();
+		locationManager.requestLocationUpdates(provider, 60000, 1000, this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationManager.removeUpdates(this);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -67,8 +89,8 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 			try {
 				// twitter = new Twitter("student", "password");
 				// twitter.setAPIRootUrl(("http://yamba.marakana.com/api"));
-
 				yamba.getTwitter().updateStatus(statuses[0]);
+
 				return StatusActivity.this
 						.getString(R.string.msgStatusUpdatedSuccess);
 			} catch (TwitterException e) {
@@ -98,7 +120,6 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 		switch (id) {
 		case DIALOG_ID: {
 			ProgressDialog dialog = new ProgressDialog(this);
-			// dialog.setTitle("Posting to Twitter");
 			dialog.setMessage(this.getString(R.string.msgPostingTweet));
 			dialog.setIndeterminate(true);
 			dialog.setCancelable(true);
@@ -106,6 +127,32 @@ public class StatusActivity extends BaseActivity implements OnClickListener {
 		}
 		}
 		return null;
+
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		yamba.getTwitter()
+				.setMyLocation(
+						new double[] { location.getLatitude(),
+								location.getLongitude() });
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
 
 	}
 

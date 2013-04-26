@@ -1,7 +1,11 @@
 package com.kcpradeep.yamba;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -19,6 +23,7 @@ public class TimelineActivity extends BaseActivity {
 	YambaApplication yamba;
 	Cursor cursor;
 	SimpleCursorAdapter adapter;
+	TimelineReceiver timelineReceiver;
 
 	/***
 	 * custom binder to bind createdAt column to its view and change data from
@@ -40,6 +45,21 @@ public class TimelineActivity extends BaseActivity {
 		}
 	};
 
+	private void setupList() {
+		// Get the data
+		cursor = yamba.statusData.query();
+		//startManagingCursor(cursor);
+
+		String[] from = { StatusData.C_USER, StatusData.C_TEXT,
+				StatusData.C_CREATEDAT };
+		int[] to = { R.id.textUser, R.id.textText, R.id.textCreatedAt };
+		// Setup Adapter
+
+		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, from, to);
+		adapter.setViewBinder(VIEW_BINDER);
+		listStatuses.setAdapter(adapter);
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,18 +71,7 @@ public class TimelineActivity extends BaseActivity {
 
 		listStatuses = (ListView) findViewById(R.id.statuses);
 
-		// Get the data
-		cursor = yamba.statusData.query();
-		startManagingCursor(cursor);
-
-		String[] from = { StatusData.C_USER, StatusData.C_TEXT,
-				StatusData.C_CREATEDAT };
-		int[] to = { R.id.textUser, R.id.textText, R.id.textCreatedAt };
-		// Setup Adapter
-
-		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, from, to);
-		adapter.setViewBinder(VIEW_BINDER);
-		listStatuses.setAdapter(adapter);
+		this.setupList();
 
 		// check if pref has been set
 		if (yamba.prefs.getString("username", null) == null) {
@@ -73,11 +82,35 @@ public class TimelineActivity extends BaseActivity {
 		}
 		Log.d("TimelineActivity", "onCreated");
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		cursor.requery();
+
+		// Register timeline receiver
+		if (timelineReceiver == null) {
+			timelineReceiver = new TimelineReceiver();
+		}
+
+		registerReceiver(timelineReceiver, new IntentFilter("yamba.newStatus"));
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		// unregister timeline receiver
+		unregisterReceiver(timelineReceiver);
+	}
+
+	class TimelineReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// refresh the list
+			setupList();
+
+		}
+
+	}
 }

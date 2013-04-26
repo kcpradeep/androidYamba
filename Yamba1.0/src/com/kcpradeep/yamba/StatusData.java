@@ -4,6 +4,7 @@ import winterwell.jtwitter.Twitter.Status;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -42,17 +43,27 @@ public class StatusData {
 	 * 
 	 * @param values
 	 */
-	public void insert(ContentValues values) {
+	public long insert(ContentValues values) {
 		// Open Database
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		// insert
-		db.insertWithOnConflict(DbHelper.TABLE, null, values,
-				SQLiteDatabase.CONFLICT_REPLACE);
+
+		long ret = 0;
+
+		try {
+			ret = db.insertOrThrow(dbHelper.TABLE, null, values);
+		} catch (SQLException e) {
+			ret = -1;
+		}
+
+		// long ret = db.insertWithOnConflict(DbHelper.TABLE, null,
+		// values,SQLiteDatabase.CONFLICT_FAIL);
 		// close
 		db.close();
+		return ret;
 	}
 
-	public void insert(Status status) {
+	public long insert(Status status) {
 		ContentValues values = new ContentValues();
 		// create content values
 		values.put(StatusData.C_ID, status.id);
@@ -60,7 +71,7 @@ public class StatusData {
 		values.put(StatusData.C_USER, status.user.name);
 		values.put(StatusData.C_TEXT, status.text);
 		// insert data
-		insert(values);
+		return this.insert(values);
 	}
 
 	/**

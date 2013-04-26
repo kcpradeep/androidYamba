@@ -14,5 +14,9 @@
         android:key="server"
         android:summary="@string/serverSummary"
         android:title="@string/server" />
+     <EditTextPreference
+        android:key="startOnBoot"
+        android:summary="@string/startOnBootSummary"
+        android:title="@string/startOnBoot" />
 
 </PreferenceScreen>

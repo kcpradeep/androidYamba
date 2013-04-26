@@ -57,13 +57,20 @@ public class UpdaterService extends Service {
 
 		@Override
 		public void run() {
+			boolean newStatus = false;
 			yamba.setRunning(true);
 			while (yamba.isRunning()) {
 				Log.d(TAG, "Updater running");
 				Twitter twitter = yamba.getTwitter();
 				List<Status> statuses = twitter.getHomeTimeline();
 				for (Status status : statuses) {
-					yamba.statusData.insert(status);
+					Log.d(TAG, status.getText());
+					if (yamba.statusData.insert(status) > 0) {
+						newStatus = true;
+					}
+				}
+				if (newStatus) {
+					sendBroadcast(new Intent("yamba.newStatus"));
 				}
 				try {
 					Thread.sleep(DELAY);

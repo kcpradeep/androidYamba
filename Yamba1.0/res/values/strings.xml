@@ -23,4 +23,6 @@
     <string name="msgPurge">All Data Purged..</string>
     <string name="titleTimeline">Timeline</string>
     <string name="msgSetupPrefs">Please set up the preferences</string>
+    <string name="startOnBoot">Start on boot</string>
+    <string name="startOnBootSummary">Start the app on boot</string>
 </resources>
